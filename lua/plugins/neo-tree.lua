@@ -22,11 +22,10 @@ return {
                     hide_gitignored = false, -- Set to `false` to show git-ignored files 
                 },
                 follow_current_file = {
-                    enabled = true, -- This will find and focus the file in the active buffer every time
-
-                        -- the current file is changed while the tree is open.
+                    enabled = true,          -- This will find and focus the file in the active buffer every time
                     leave_dirs_open = true, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
                 },
+                use_libuv_file_watcher = true,
             },
             default_component_configs = {
                 git_status = {

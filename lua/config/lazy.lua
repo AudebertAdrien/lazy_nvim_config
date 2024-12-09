@@ -25,6 +25,16 @@ require("lazy").setup({
         enabled = true,
         notify = true,
     },
+    -- Automatically install missing plugins
+    install = {
+        missing = true, -- Install missing plugins on startup
+    },
+    -- Update plugins every time Lazy.nvim starts
+    performance = {
+        cache = {
+            enabled = true,
+        },
+    },
     change_detection = {
         enabled = true,
         notify = false,

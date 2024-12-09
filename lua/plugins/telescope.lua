@@ -19,7 +19,16 @@ return  {
                     ["ui-select"] = {
                         require("telescope.themes").get_dropdown {}
                     }
-                }
+                },
+                defaults = {
+                    file_ignore_patterns = { ".git/" },  -- Adjust to ignore certain folders if needed
+                    hidden = true,                      -- Enable hidden file search
+                },
+                pickers = {
+                    find_files = {
+                    hidden = true,                    -- Include hidden files for find_files picker
+                    },
+                },
             })
             require("telescope").load_extension("ui-select")
         end
