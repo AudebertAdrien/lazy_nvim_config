@@ -16,13 +16,13 @@ return {
 
                 -- Formatter for JavaScript/TypeScript
                 null_ls.builtins.formatting.prettierd.with({
-                    filetypes = { "javascript", "typescript", "json" },
+                    filetypes = { "javascript", "typescript", "typescriptreact", "json", "css", "html"},
                 }),
 
                 require("none-ls.diagnostics.eslint_d"),
             },
 		})
 
-		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+        vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { noremap = true, silent = true })
 	end
 }

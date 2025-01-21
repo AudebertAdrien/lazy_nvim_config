@@ -13,7 +13,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         os.exit(1)
     end
 end
-vim.opt.rtp:prepend(lazypath)
+
+vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({
     spec = {
@@ -31,6 +32,15 @@ require("lazy").setup({
     },
     -- Update plugins every time Lazy.nvim starts
     performance = {
+        rtp = {
+            disabled_plugins = {
+                "gzip",
+                "tarPlugin",
+                "tohtml",
+                "zipPlugin",
+                "netrwPlugin",
+            },
+        },
         cache = {
             enabled = true,
         },

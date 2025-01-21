@@ -22,11 +22,11 @@ return  {
                 },
                 defaults = {
                     file_ignore_patterns = { ".git/" },  -- Adjust to ignore certain folders if needed
-                    hidden = true,                      -- Enable hidden file search
+                    hidden = true,                       -- Enable hidden file search
                 },
                 pickers = {
                     find_files = {
-                    hidden = true,                    -- Include hidden files for find_files picker
+                        hidden = true,                   -- Include hidden files for find_files picker
                     },
                 },
             })

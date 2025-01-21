@@ -29,7 +29,17 @@ return	{
 			-- Active window sections
 			sections = {
 				lualine_a = {'mode'},                	-- Show current mode (e.g., Normal, Insert)
-				lualine_b = {'branch', 'diagnostics'},	-- Git branch and diagnostics
+				lualine_b = {
+                  'branch',
+                  {
+                    'diagnostics',
+                    sources = {'nvim_diagnostic'},
+                    sections = {'error', 'warn', 'info', 'hint'},
+                    symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '},
+                    colored = true, -- Color based on diagnostic type
+                    update_in_insert = false,
+                  }
+                },	-- Git branch and diagnostics
 				lualine_c = {'filename'},            	-- Current file name
 				lualine_x = {'filetype'},            	-- File type (e.g., .lua, .py)
 				lualine_y = {'progress'},            	-- Progress through file (e.g., 50%)
