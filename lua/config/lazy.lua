@@ -17,6 +17,12 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({
+    opts = {
+      rocks = {
+        enabled = false,
+        hererocks = false,
+      }
+    },
     spec = {
         -- import your plugins
         { import = "plugins" },

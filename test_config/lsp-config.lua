@@ -20,6 +20,7 @@ return {
 			local lspconfig = require("lspconfig")
 		-- Configuration pour lua_ls
 			lspconfig.lua_ls.setup({
+                enabled = false,
 				settings = {
 					Lua = {
 						diagnostics = {
