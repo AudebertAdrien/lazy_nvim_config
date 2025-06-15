@@ -7,11 +7,16 @@ return {
         "MunifTanjim/nui.nvim",
     },
 
+
     config = function()
         require("neo-tree").setup({
             close_if_last_window = true,
-            window = { position = "left", width = 30 },
             filesystem = {
+                window = {
+                  position = "left",
+                  width = 30,
+                  height = 40,
+                },
                 filtered_items = {
                     visible = true,
                     hide_dotfiles = false,
@@ -48,8 +53,6 @@ return {
         })
 
         vim.keymap.set('n', '<leader>n', ':Neotree toggle<CR>', { noremap = true, silent = true })
-        vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
-        vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
         vim.keymap.set('n', '<leader>e', ':Neotree toggle float<CR>', { noremap = true, silent = true, desc = "Toggle Neo-tree Float" })
     end
 }
