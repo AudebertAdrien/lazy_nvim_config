@@ -4,10 +4,10 @@ return {
 
     config = function()
         require('nvim-treesitter.configs').setup({
-            -- Automatiquement installer les parsers quand vous ouvrez un fichier
+            -- Automatically install missing parsers when entering buffer
             auto_install = true,
 
-            -- Liste des parsers à installer (ou "all" pour tous les parsers)
+            -- List of parsers to install or "all"
             ensure_installed = {
                 "lua",
                 "python",
@@ -20,22 +20,52 @@ return {
                 "yaml",
             },
 
-            -- Installer les parsers de manière synchrone
+            -- Install parsers synchronously (only recommended for a few parsers)
             sync_install = false,
 
-            -- Parsers à ignorer pendant l'installation
+            -- Parsers to ignore installing
             ignore_install = {},
 
-            -- Activer la coloration syntaxique Treesitter
+            -- Syntax highlighting configuration
             highlight = {
-                enable = true, -- Activer la coloration syntaxique basée sur Treesitter
-                additional_vim_regex_highlighting = false, -- Désactiver la coloration basée sur Vim pour améliorer les performances
+                enable = true,  -- Enable Treesitter-based syntax highlighting
+                additional_vim_regex_highlighting = false,  -- Disable Vim regex highlighting for performance
+
+                -- Disable Treesitter highlight for large files (over 100 KB)
+                disable = function(lang, buf)
+                    local max_filesize = 100 * 1024 -- 100 KB
+                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        return true
+                    end
+                    return false
+                end,
             },
 
-            -- Activer l'indentation basée sur Treesitter
+            -- Enable Treesitter-based indentation
             indent = {
                 enable = true,
+            },
+
+            -- Optional: Incremental selection
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = "gnn",
+                    node_incremental = "grn",
+                    scope_incremental = "grc",
+                    node_decremental = "grm",
+                },
+            },
+
+            -- Optional: Playground for Treesitter (for debugging queries)
+            playground = {
+                enable = true,
+                disable = {},
+                updatetime = 25, -- Debounced time for highlighting nodes in ms
+                persist_queries = false,
             },
         })
     end,
 }
+

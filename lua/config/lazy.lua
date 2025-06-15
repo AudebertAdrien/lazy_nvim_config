@@ -81,6 +81,6 @@ require("lazy").setup({
     -- Detect config changes and reload lazy.nvim
     change_detection = {
         enabled = true,
-        notify = true,
+        notify = false,
     },
 })
