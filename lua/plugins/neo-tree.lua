@@ -7,44 +7,44 @@ return {
         "MunifTanjim/nui.nvim",
     },
 
-    event = "VeryLazy", -- Lazy-load Neo-tree when needed
     config = function()
         require("neo-tree").setup({
-            close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
-
-            window = {
-                position = "left",
-                width = 30,
-            },
+            close_if_last_window = true,
+            window = { position = "left", width = 30 },
             filesystem = {
                 filtered_items = {
-                    visible = true,          -- Set to `true` to show hidden files
-                    hide_dotfiles = false,   -- Set to `false` to show dotfiles (e.g., .gitignore)
-                    hide_gitignored = false, -- Set to `false` to show git-ignored files
+                    visible = true,
+                    hide_dotfiles = false,
+                    hide_gitignored = false,
                 },
-                follow_current_file = {
-                    enabled = true,          -- This will find and focus the file in the active buffer every time
-                    leave_dirs_open = true,  -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
-                },
+                follow_current_file = { enabled = true, leave_dirs_open = true },
                 use_libuv_file_watcher = true,
             },
             default_component_configs = {
                 git_status = {
-                     symbols = {
-                          -- Change type
-                          added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-                          modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
-                          deleted   = "✖",-- this can only be used in the git_status source
-                          renamed   = "󰁕",-- this can only be used in the git_status source
-                          -- Status type
-                          untracked = "",
-                          ignored   = "",
-                          unstaged  = "",
-                          staged    = "",
-                          conflict  = "",
+                    symbols = {
+                        added = "",
+                        modified = "",
+                        deleted = "✖",
+                        renamed = "󰁕",
+                        untracked = "",
+                        ignored = "",
+                        unstaged = "",
+                        staged = "",
+                        conflict = "",
                     },
                 },
             },
+        })
+
+        vim.api.nvim_create_autocmd("VimEnter", {
+            callback = function(data)
+                -- Only open Neo-tree if started with a directory
+                if vim.fn.isdirectory(data.file) == 1 then
+                    vim.cmd.cd(data.file)
+                    require("neo-tree.command").execute({ toggle = true, dir = data.file })
+                end
+            end,
         })
 
         vim.keymap.set('n', '<leader>n', ':Neotree toggle<CR>', { noremap = true, silent = true })
@@ -53,3 +53,4 @@ return {
         vim.keymap.set('n', '<leader>e', ':Neotree toggle float<CR>', { noremap = true, silent = true, desc = "Toggle Neo-tree Float" })
     end
 }
+
