@@ -7,6 +7,7 @@ return {
         local alpha = require("alpha")
         local dashboard = require("alpha.themes.dashboard")
 
+        -- ✨ Custom Header ASCII Art
         dashboard.section.header.val = {
             [[                                                                       ]],
             [[                                                                       ]],
@@ -25,6 +26,7 @@ return {
             [[                                                                       ]],
         }
 
+        -- 🧩 Dashboard Buttons
         dashboard.section.buttons.val = {
             dashboard.button("f", " " .. " Find file",       ":Telescope find_files <CR>"),
             dashboard.button("n", " " .. " New file",        ":ene <BAR> startinsert <CR>"),
@@ -34,23 +36,24 @@ return {
             dashboard.button("q", " " .. " Quit",            "<cmd> qa <cr>"),
         }
 
-        for _, button in ipairs(dashboard.section.buttons.val) do
-            button.opts.hl = "AlphaButtons"
-            button.opts.hl_shortcut = "AlphaShortcut"
+        -- 🎨 Apply Highlights to Buttons
+        for _, btn in ipairs(dashboard.section.buttons.val) do
+            btn.opts.hl = "AlphaButtons"
+            btn.opts.hl_shortcut = "AlphaShortcut"
         end
 
-        local function footer()
-            return "Don't Stop Until You are Proud..."
-        end
+        -- 🦶 Footer Message
+        dashboard.section.footer.val = "Don't Stop Until You are Proud..."
 
-        dashboard.section.footer.val = footer()
-
+        -- 🔧 Highlights
         dashboard.section.header.opts.hl = "AlphaHeader"
         dashboard.section.buttons.opts.hl = "AlphaButtons"
         dashboard.section.footer.opts.hl = "AlphaFooter"
 
+        -- 🧱 Layout: Add top padding
         dashboard.opts.layout[1].val = 8
 
+        -- 🚀 Setup Alpha
         alpha.setup(dashboard.opts)
     end,
   }

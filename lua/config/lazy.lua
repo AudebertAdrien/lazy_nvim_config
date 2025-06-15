@@ -1,8 +1,9 @@
--- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    local out = vim.fn.system({
+        "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath
+    })
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
@@ -14,29 +15,46 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     end
 end
 
+
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({
+    -- LuaRocks settings (disabled here)
     opts = {
-      rocks = {
-        enabled = false,
-        hererocks = false,
-      }
+        defaults = {
+            lazy = true,
+            version = false,
+        },
+        rocks = {
+            enabled = false,
+            hererocks = false,
+        },
     },
+    -- Plugin specifications: import from 'lua/plugins.lua'
     spec = {
-        -- import your plugins
         { import = "plugins" },
     },
-    -- automatically check for plugin updates
+
+    -- Automatic plugin updates
     checker = {
         enabled = true,
         notify = true,
+        frequency = 3600, -- Check updates every hour
     },
-    -- Automatically install missing plugins
+
+    -- Auto-install missing plugins on startup
     install = {
-        missing = true, -- Install missing plugins on startup
+        missing = true,
+        colorscheme = { "gruvbox", "tokyonight", "catppuccin" }, -- Example fallback colorschemes
     },
-    -- Update plugins every time Lazy.nvim starts
+
+    -- UI improvements for lazy.nvim
+    ui = {
+        border = "rounded",
+        size = { width = 0.8, height = 0.8 },
+    },
+
+    -- Disable built-in plugins to speed up startup
     performance = {
         rtp = {
             disabled_plugins = {
@@ -44,15 +62,25 @@ require("lazy").setup({
                 "tarPlugin",
                 "tohtml",
                 "zipPlugin",
+                "netrw",
                 "netrwPlugin",
+                "matchit",
+                "matchparen",
+                "shada_plugin",
+                "spellfile_plugin",
+                "rplugin",
+                "shada",
+                "tutor",
             },
         },
         cache = {
             enabled = true,
         },
     },
+
+    -- Detect config changes and reload lazy.nvim
     change_detection = {
         enabled = true,
-        notify = false,
+        notify = true,
     },
 })

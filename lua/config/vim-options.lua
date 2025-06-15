@@ -1,61 +1,146 @@
--- Set leader key to space, used as a prefix for custom shortcuts
+-- Set leader keys (used for custom shortcuts)
 vim.g.mapleader = " "
 
--- Disable Ruby and Perl providers; ignore warnings if these providers are not needed
+-- Disable unnecessary language providers to improve startup time
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- Set Python 3 provider explicitly to avoid ambiguity between multiple installations
+-- Explicitly set the Python 3 provider path (used by plugins like treesitter, LSP, etc.)
 vim.g.python3_host_prog = '/usr/bin/python3'
 
--- Display absolute line numbers, with relative numbers for easy navigation
+-- Disable netrw (built-in file explorer) to use a plugin like nvim-tree instead
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- Line numbers: show absolute for current line, relative for the rest
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Enable title and command display; set command height to 0 for a minimal UI
-vim.opt.title = true
-vim.opt.showcmd = true
-vim.opt.cmdheight = 0
+-- UI preferences
+vim.opt.title = true             -- Show file name in window title
+vim.opt.showcmd = true           -- Show (partially typed) commands
+vim.opt.cmdheight = 0            -- Minimal height for the command line (requires Neovim 0.9+)
 
--- Indentation settings:
-vim.opt.tabstop = 4          -- A tab represents 4 spaces
-vim.opt.softtabstop = 4          -- A tab represents 4 spaces
-vim.opt.shiftwidth = 4       -- Auto-indent/outdent by 4 spaces
-vim.opt.expandtab = true    -- Convert tabs to spaces 
+-- Better search behavior
+vim.opt.hlsearch = true          -- Highlight all matches
+vim.opt.incsearch = true         -- Show matches as you type
+vim.opt.ignorecase = true        -- Case-insensitive search...
+vim.opt.smartcase = true         -- ...unless uppercase letters are used
 
-vim.opt.smarttab = true      -- Insert correct amount of space when hitting Tab
-vim.opt.smartindent = true   -- Smart indentation based on file structure
-vim.opt.autoindent = true    -- Disable automatic indentation copying
+-- Indentation and tabs
+vim.opt.tabstop = 4              -- A tab equals 4 spaces visually
+vim.opt.softtabstop = 4          -- How many spaces a <Tab> counts for while editing
+vim.opt.shiftwidth = 4           -- Indentation width for auto-indent and << >>
+vim.opt.expandtab = true         -- Convert tabs to spaces
+vim.opt.smarttab = true          -- Use shiftwidth when pressing <Tab> at the beginning of a line
+vim.opt.smartindent = true       -- Smart auto-indenting based on syntax
+vim.opt.autoindent = true        -- Copy indent from the current line
 
--- Break indent for better readability in wrapped lines
+-- Maintain visual indentation in wrapped lines
 vim.opt.breakindent = true
 
--- Backup settings:
-vim.opt.backupdir = vim.fn.expand("~/.nvim-backup") -- Set backup directory location
-vim.opt.backup = true                    -- Enable backup of files
-vim.opt.writebackup = true               -- Enable write-backup before saving
+-- Better scrolling experience (keeps 8 lines visible above/below the cursor)
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
 
--- Set escape key timeout to 0 for instant response
-vim.o.ttimeoutlen = 0
+-- Autocompletion behavior
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+-- "menu"      → Show popup menu
+-- "menuone"   → Show even if there's only one match
+-- "noselect"  → Do not preselect any item (you must pick one manually)
 
--- Use system clipboard for copy-paste in Neovim
-vim.o.clipboard = "unnamedplus"
+-- Create a backup directory if it doesn't exist
+local backup_dir = vim.fn.expand("~/.nvim-backup")
+if vim.fn.isdirectory(backup_dir) == 0 then
+  vim.fn.mkdir(backup_dir, "p")
+end
+vim.opt.backupdir = backup_dir
+vim.opt.backup = true             -- Enable backups before writing
+vim.opt.writebackup = true        -- Keep a backup while writing
 
--- Filetype-specific settings for YAML files
+-- Enable persistent undo with a custom undo directory
+local undo_dir = vim.fn.expand("~/.nvim-undo")
+if vim.fn.isdirectory(undo_dir) == 0 then
+  vim.fn.mkdir(undo_dir, "p")
+end
+vim.opt.undodir = undo_dir
+vim.opt.undofile = true           -- Enable persistent undo
+vim.opt.undolevels = 1000         -- Maximum undo levels
+vim.opt.undoreload = 10000        -- Allow large file reloads with undo history
+
+-- Key mapping timeouts
+vim.opt.ttimeoutlen = 0           -- Timeout for key code sequences (e.g. <Esc>) — 0ms = instant
+vim.opt.timeoutlen = 300          -- Timeout for mapping sequences (e.g. jj to <Esc>) — 300ms to complete
+
+-- Use system clipboard for all yank/paste operations
+vim.opt.clipboard = "unnamedplus"
+
+-- Show invisible characters like tabs and trailing spaces
+vim.opt.list = true
+vim.opt.listchars = {
+    tab = "› ",        -- Show tabs as '› ' (arrow + space)
+    trail = ".",       -- Show trailing spaces as '·' (dot)
+    extends = "›",     -- Show '›' when line continues beyond screen right edge
+    precedes = "‹",    -- Show '‹' when line continues beyond screen left edge
+    nbsp = "·"         -- Show non-breaking spaces as '·'
+}
+
+-- Enable 24-bit RGB colors and set background for proper theme contrast
+vim.opt.termguicolors = true
+vim.opt.background = "dark"
+
+-- Configure better code folding using Tree-sitter syntax parsing
+vim.opt.foldmethod = "expr"                            -- Use expression to define folds
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"        -- Use Tree-sitter folding expression
+vim.opt.foldenable = false                              -- Start with folds open (no auto-fold)
+vim.opt.foldlevel = 99                                  -- Open all folds by default (high level)
+
+-- Enable mouse support in all modes (normal, insert, visual, etc.)
+vim.opt.mouse = "a"
+
+-- Set update time (in milliseconds) for faster UI responsiveness
+vim.opt.updatetime = 300
+
+-- Always show sign column to prevent text shifting when signs appear (e.g. git or LSP)
+vim.opt.signcolumn = "yes"
+
+-- Filetype-specific indentation settings for YAML files
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "yaml",
+    pattern = { "yaml", "yml" },
     callback = function()
-        vim.opt_local.tabstop = 2          -- In YAML, a tab equals 2 spaces
-        vim.opt_local.shiftwidth = 2       -- Indent/outdent by 2 spaces
-        vim.opt_local.expandtab = true     -- Use spaces instead of tabs
-
-        vim.opt.list = true                -- Enable visible representation of special characters
-        vim.opt.listchars = {
-            tab = '› ',                    -- Display tabs as '› '
-            trail = '·',                   -- Show trailing spaces as dots
-            extends = '>',                 -- Mark overflowed text with '>'
-            precedes = '<',                -- Mark underflowed text with '<'
-            space = '·'                    -- Display spaces as dots for easier visibility
-        }
+        vim.opt_local.tabstop = 2        -- Tabs count as 2 spaces
+        vim.opt_local.shiftwidth = 2     -- Indent/outdent by 2 spaces
+        vim.opt_local.softtabstop = 2    -- Insert/delete 2 spaces when pressing Tab or Backspace
+        vim.opt_local.expandtab = true   -- Use spaces instead of tab characters
     end,
 })
+
+-- Filetype-specific indentation settings for JS/TS/JSON/HTML/CSS etc.
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "javascript", "typescript", "jsx", "tsx", "json", "html", "css", "scss" },
+    callback = function()
+        vim.opt_local.tabstop = 2
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.softtabstop = 2
+        vim.opt_local.expandtab = true
+    end,
+})
+
+-- Remove trailing whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = function()
+        local save_cursor = vim.fn.getpos(".")
+        vim.cmd([[%s/\s\+$//e]])
+        vim.fn.setpos(".", save_cursor)
+    end,
+})
+
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- Better indenting
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")
+
+-- Move text up and down
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
