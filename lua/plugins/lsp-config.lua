@@ -22,12 +22,13 @@ return {
                 ensure_installed = {
                     "lua_ls",
                     "pyright",
-                    "ts_ls",   -- correct server name
+                    "ts_ls",
                     "html",
                     "cssls",
                     "jsonls",
                     "bashls",
                     "yamlls",
+                    "omnisharp",
                 },
                 automatic_installation = true,
             })
@@ -81,6 +82,16 @@ return {
                 jsonls = {},
                 bashls = {},
                 yamlls = {},
+                omnisharp = {
+                    cmd = {
+                        "/home/yorito/.local/share/nvim/mason/packages/omnisharp/OmniSharp",
+                        "--languageserver",
+                        "--hostPID",
+                        tostring(vim.fn.getpid()),
+                    },
+                    enable_import_completion = true,
+                    organize_imports_on_format = true,
+                },
             }
 
             for server, config in pairs(servers) do
