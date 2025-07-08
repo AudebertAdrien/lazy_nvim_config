@@ -9,15 +9,26 @@ return {
 
             -- List of parsers to install or "all"
             ensure_installed = {
+                "c_sharp",
+                "sql",
+                "rust",
                 "lua",
                 "python",
                 "javascript",
+                "typescript",
+                "tsx",
                 "html",
                 "css",
                 "bash",
                 "json",
                 "markdown",
                 "yaml",
+                "bash",
+                "ssh_config",
+                "make",
+                "nginx",
+                "vim",
+                "vimdoc"
             },
 
             -- Install parsers synchronously (only recommended for a few parsers)
@@ -28,7 +39,7 @@ return {
 
             -- Syntax highlighting configuration
             highlight = {
-                enable = true,  -- Enable Treesitter-based syntax highlighting
+                enable = true,                              -- Enable Treesitter-based syntax highlighting
                 additional_vim_regex_highlighting = false,  -- Disable Vim regex highlighting for performance
 
                 -- Disable Treesitter highlight for large files (over 100 KB)
@@ -56,14 +67,6 @@ return {
                     scope_incremental = "grc",
                     node_decremental = "grm",
                 },
-            },
-
-            -- Optional: Playground for Treesitter (for debugging queries)
-            playground = {
-                enable = true,
-                disable = {},
-                updatetime = 25, -- Debounced time for highlighting nodes in ms
-                persist_queries = false,
             },
         })
     end,

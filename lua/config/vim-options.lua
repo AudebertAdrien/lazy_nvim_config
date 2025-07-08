@@ -31,10 +31,12 @@ vim.opt.smartcase = true         -- ...unless uppercase letters are used
 vim.opt.tabstop = 4              -- A tab equals 4 spaces visually
 vim.opt.softtabstop = 4          -- How many spaces a <Tab> counts for while editing
 vim.opt.shiftwidth = 4           -- Indentation width for auto-indent and << >>
-vim.opt.expandtab = true         -- Convert tabs to spaces
+vim.opt.expandtab = false        -- Convert tabs to spaces
 vim.opt.smarttab = true          -- Use shiftwidth when pressing <Tab> at the beginning of a line
 vim.opt.smartindent = true       -- Smart auto-indenting based on syntax
 vim.opt.autoindent = true        -- Copy indent from the current line
+
+vim.opt.fixendofline = false
 
 -- Maintain visual indentation in wrapped lines
 vim.opt.breakindent = true
@@ -80,8 +82,8 @@ vim.opt.list = true
 vim.opt.listchars = {
     tab = "› ",        -- Show tabs as '› ' (arrow + space)
     trail = ".",       -- Show trailing spaces as '·' (dot)
-    extends = "›",     -- Show '›' when line continues beyond screen right edge
-    precedes = "‹",    -- Show '‹' when line continues beyond screen left edge
+    extends = "}",     -- Show '›' when line continues beyond screen right edge
+    precedes = "{",    -- Show '‹' when line continues beyond screen left edge
     nbsp = "·"         -- Show non-breaking spaces as '·'
 }
 
@@ -106,7 +108,7 @@ vim.opt.signcolumn = "yes"
 
 -- Filetype-specific indentation settings for YAML files
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "yaml", "yml" },
+    pattern = { "yaml", "yml", "lua" },
     callback = function()
         vim.opt_local.tabstop = 2        -- Tabs count as 2 spaces
         vim.opt_local.shiftwidth = 2     -- Indent/outdent by 2 spaces
@@ -122,7 +124,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.tabstop = 4
         vim.opt_local.shiftwidth = 4
         vim.opt_local.softtabstop = 4
-        vim.opt_local.expandtab = true
+        vim.opt_local.expandtab = false
     end,
 })
 

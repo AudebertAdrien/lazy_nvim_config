@@ -14,8 +14,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         os.exit(1)
     end
 end
-
-
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({
@@ -38,7 +36,7 @@ require("lazy").setup({
     -- Automatic plugin updates
     checker = {
         enabled = true,
-        notify = true,
+        notify = false,
         frequency = 3600, -- Check updates every hour
     },
 
