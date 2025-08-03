@@ -13,7 +13,7 @@ return {
             filesystem = {
                 window = {
                   position = "left",
-                  width = 30,
+                  width = 35,
                   height = 40,
                 },
                 filtered_items = {
@@ -52,7 +52,6 @@ return {
         })
 
         vim.keymap.set('n', '<leader>n', ':Neotree toggle<CR>', { noremap = true, silent = true })
-        vim.keymap.set('n', '<leader>e', ':Neotree toggle float<CR>', { noremap = true, silent = true, desc = "Toggle Neo-tree Float" })
     end
 }
 

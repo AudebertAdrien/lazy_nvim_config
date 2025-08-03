@@ -1,7 +1,8 @@
 return {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
-                config = function()
+        config = function()
+
         -- Create an autocommand to refresh lualine when recording starts/stops
         vim.api.nvim_create_autocmd("RecordingEnter", {
             callback = function()
@@ -21,20 +22,22 @@ return {
                 theme = 'catppuccin',            -- Use catppuccin theme for consistency
                 component_separators = "",       -- No separators between components
                 section_separators = "",         -- No separators between sections
+
                 -- Disable lualine in these filetypes (empty means none)
                 disabled_filetypes = {
                     statusline = {},
                     winbar = {},
                 },
-                ignore_focus = {},               -- Filetypes to ignore focus (keep lualine active)
+                ignore_focus = {},              -- Filetypes to ignore focus (keep lualine active)
                 always_divide_middle = true,    -- Separate left/right sections if enough space
-                globalstatus = true,            -- Use a single global statusline (Neovim 0.7+)
-                refresh = {                    -- Refresh rates (milliseconds)
-                    statusline = 100,          -- Faster refresh for macro recording
+                globalstatus = false,            -- Use a single global statusline (Neovim 0.7+)
+                refresh = {                     -- Refresh rates (milliseconds)
+                    statusline = 100,           -- Faster refresh for macro recording
                     tabline = 1000,
                     winbar = 1000,
                 },
             },
+
             -- Active window sections
             sections = {
                 lualine_a = { 'mode' },         -- Mode (Normal, Insert, etc)
