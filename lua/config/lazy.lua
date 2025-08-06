@@ -28,7 +28,7 @@ require("lazy").setup({
     -- Configuration options for lazy.nvim behavior
     opts = {
         defaults = {
-            lazy = true,    -- Load plugins lazily by default for faster startup
+            lazy = true,     -- Load plugins lazily by default for faster startup
             version = false, -- Don't pin plugins to specific versions
         },
         -- Disable LuaRocks integration (Lua package manager)
@@ -47,7 +47,7 @@ require("lazy").setup({
     checker = {
         enabled = true,     -- Enable automatic update checking
         notify = false,     -- Don't show notifications for available updates
-        frequency = 3600,   -- Check for updates every hour (3600 seconds)
+        frequency = 7200,   -- Check for updates every 2 hours (7200 seconds)
     },
 
     -- Auto-installation settings for missing plugins
@@ -60,7 +60,7 @@ require("lazy").setup({
     -- UI customization for lazy.nvim's interface
     ui = {
         border = "rounded",                    -- Use rounded borders for windows
-        size = { width = 0.8, height = 0.8 }, -- Window size as percentage of screen
+        size = { width = 0.8, height = 0.8 },  -- Window size as percentage of screen
     },
 
     -- Performance optimizations to speed up Neovim startup
@@ -68,19 +68,19 @@ require("lazy").setup({
         rtp = {
             -- Disable built-in plugins that aren't commonly used to reduce startup time
             disabled_plugins = {
-                "gzip",           -- Gzip file support
-                "tarPlugin",      -- Tar archive support
-                "tohtml",         -- Convert buffer to HTML
-                "zipPlugin",      -- Zip archive support
-                "netrw",          -- Built-in file explorer
-                "netrwPlugin",    -- Netrw plugin components
-                "matchit",        -- Extended % matching
-                "matchparen",     -- Highlight matching parentheses
-                "shada_plugin",   -- Session data plugin
+                "gzip",             -- Gzip file support
+                "tarPlugin",        -- Tar archive support
+                "tohtml",           -- Convert buffer to HTML
+                "zipPlugin",        -- Zip archive support
+                "netrw",            -- Built-in file explorer
+                "netrwPlugin",      -- Netrw plugin components
+                "matchit",          -- Extended % matching
+                "matchparen",       -- Highlight matching parentheses
+                "shada_plugin",     -- Session data plugin
                 "spellfile_plugin", -- Spell file management
-                "rplugin",        -- Remote plugin support
-                "shada",          -- Session data
-                "tutor",          -- Built-in tutorial
+                "rplugin",          -- Remote plugin support
+                "shada",            -- Session data
+                "tutor",            -- Built-in tutorial
             },
         },
         -- Enable plugin caching for faster subsequent loads

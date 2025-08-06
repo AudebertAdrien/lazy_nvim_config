@@ -35,15 +35,6 @@ return {
         end,
     },
     {
-        "hrsh7th/nvim-cmp",
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-        },
-        config = function()
-            -- You can put your nvim-cmp setup here (optional)
-        end,
-    },
-    {
         "neovim/nvim-lspconfig",
         dependencies = {
             "mason.nvim",

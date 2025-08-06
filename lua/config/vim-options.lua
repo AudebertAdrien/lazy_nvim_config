@@ -124,7 +124,7 @@ vim.opt.listchars = {
     trail = "·",       -- Show trailing spaces as '·' (middle dot)
     extends = "}",     -- Show '}' when line continues beyond screen right edge
     precedes = "{",    -- Show '{' when line continues beyond screen left edge
-    nbsp = "·"         -- Show non-breaking spaces as '·'
+    nbsp = "^"         -- Show non-breaking spaces as '·'
 }
 
 -- ============================================================================
@@ -138,7 +138,7 @@ vim.opt.background = "dark"
 -- CODE FOLDING CONFIGURATION
 -- ============================================================================
 -- Configure code folding (Tree-sitter folding will be enabled by treesitter plugin)
-vim.opt.foldmethod = "manual"                          -- Default folding method
+vim.opt.foldmethod = "manual"                           -- Default folding method
 vim.opt.foldenable = false                              -- Start with folds open (no auto-fold)
 vim.opt.foldlevel = 99                                  -- Open all folds by default (high level)
 
@@ -233,3 +233,24 @@ vim.keymap.set("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
+
+-- ============================================================================
+-- SPLIT MANAGEMENT (OPEN, CLOSE, RESIZE)
+-- ============================================================================
+
+-- Open horizontal and vertical splits with leader shortcuts
+vim.keymap.set("n", "<leader>sh", ":split<CR>", { desc = "Split horizontal", noremap = true, silent = true })
+vim.keymap.set("n", "<leader>sv", ":vsplit<CR>", { desc = "Split vertical", noremap = true, silent = true })
+
+-- Close current split
+vim.keymap.set("n", "<leader>sc", "<cmd>close<CR>", { desc = "Close split", noremap = true, silent = true })
+
+-- Close all other splits
+vim.keymap.set("n", "<leader>so", "<cmd>only<CR>", { desc = "Close other splits", noremap = true, silent = true })
+
+-- Resize splits with Alt + arrows
+vim.keymap.set("n", "<A-Up>", ":resize +3<CR>", { desc = "Increase height", noremap = true, silent = true })
+vim.keymap.set("n", "<A-Down>", ":resize -3<CR>", { desc = "Decrease height", noremap = true, silent = true })
+vim.keymap.set("n", "<A-Left>", ":vertical resize -5<CR>", { desc = "Decrease width", noremap = true, silent = true })
+vim.keymap.set("n", "<A-Right>", ":vertical resize +5<CR>", { desc = "Increase width", noremap = true, silent = true })
+
